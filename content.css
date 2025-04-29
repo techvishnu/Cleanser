@@ -1,0 +1,39 @@
+.file-segregator-blacklist-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #00ff9d;
+    color: #121212;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 999999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-segregator-blacklist-btn:hover {
+    background-color: #00cc7d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.file-segregator-blacklist-btn.blacklisted {
+    background-color: #ff4444;
+}
+
+.file-segregator-blacklist-btn.blacklisted:hover {
+    background-color: #cc3333;
+}
+
+.file-segregator-blacklist-btn svg {
+    width: 16px;
+    height: 16px;
+} 
