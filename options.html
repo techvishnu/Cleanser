@@ -40,11 +40,28 @@
 				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 			}
 
-			h1 {
+			h1, h2 {
 				font-size: 1.875rem;
 				font-weight: 600;
 				margin-bottom: 1.5rem;
 				color: var(--primary-color);
+			}
+
+			h2 {
+				font-size: 1.5rem;
+				margin-top: 2rem;
+			}
+
+			.section {
+				margin-bottom: 2rem;
+				padding-bottom: 2rem;
+				border-bottom: 1px solid var(--border-color);
+			}
+
+			.section:last-child {
+				border-bottom: none;
+				margin-bottom: 0;
+				padding-bottom: 0;
 			}
 
 			table {
@@ -124,20 +141,61 @@
 			.delete-btn:hover {
 				background-color: #cc3333;
 			}
+
+			.blacklist-item {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0.75rem;
+				background-color: var(--background-color);
+				border-radius: 6px;
+				margin-bottom: 0.5rem;
+			}
+
+			.blacklist-item span {
+				font-family: monospace;
+				color: var(--text-secondary);
+			}
+
+			.add-site-form {
+				display: flex;
+				gap: 1rem;
+				margin-bottom: 1rem;
+			}
+
+			.add-site-form input {
+				flex: 1;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h1>File Segregator Settings</h1>
-			<table id="mappingTable">
-				<tr>
-					<th>Folder Name</th>
-					<th>File Extensions (comma separated)</th>
-					<th>Actions</th>
-				</tr>
-			</table>
-			<button id="addMapping">Add Mapping</button>
-			<button id="saveMappings">Save Mappings</button>
+			
+			<div class="section">
+				<h2>File Type Mappings</h2>
+				<table id="mappingTable">
+					<tr>
+						<th>Folder Name</th>
+						<th>File Extensions (comma separated)</th>
+						<th>Actions</th>
+					</tr>
+				</table>
+				<button id="addMapping">Add Mapping</button>
+				<button id="saveMappings">Save Mappings</button>
+			</div>
+
+			<div class="section">
+				<h2>Blacklisted Websites</h2>
+				<p style="margin-bottom: 1rem; color: var(--text-secondary);">
+					The extension will not organize downloads from these websites.
+				</p>
+				<div class="add-site-form">
+					<input type="text" id="newSite" placeholder="Enter website domain (e.g., example.com)">
+					<button id="addSite">Add Site</button>
+				</div>
+				<div id="blacklistContainer"></div>
+			</div>
 		</div>
 		<script src="options.js"></script>
 	</body>

@@ -3,7 +3,16 @@
 	"name": "File Segregator with UI",
 	"version": "1.0",
 	"description": "Segregate files by document type while downloading and customize the mapping.",
-	"permissions": ["downloads", "storage", "tabs"],
+	"permissions": [
+		"downloads",
+		"storage",
+		"tabs",
+		"contextMenus",
+		"activeTab"
+	],
+	"host_permissions": [
+		"<all_urls>"
+	],
 	"background": {
 		"service_worker": "background.js"
 	},

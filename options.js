@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	const mappingTable = document.getElementById("mappingTable");
 	const addMappingBtn = document.getElementById("addMapping");
 	const saveMappingsBtn = document.getElementById("saveMappings");
+	const blacklistContainer = document.getElementById("blacklistContainer");
+	const addSiteBtn = document.getElementById("addSite");
+	const newSiteInput = document.getElementById("newSite");
 
 	// Load mappings from chrome.storage
 	function loadMappings() {
@@ -79,5 +82,68 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
+	// Load blacklisted sites
+	function loadBlacklistedSites() {
+		chrome.storage.sync.get("blacklistedSites", (data) => {
+			const blacklistedSites = data.blacklistedSites || [];
+			blacklistContainer.innerHTML = "";
+			blacklistedSites.forEach(site => {
+				addBlacklistItem(site);
+			});
+		});
+	}
+
+	// Add a blacklisted site to the UI
+	function addBlacklistItem(site) {
+		const item = document.createElement("div");
+		item.className = "blacklist-item";
+		
+		const siteSpan = document.createElement("span");
+		siteSpan.textContent = site;
+		
+		const removeBtn = document.createElement("button");
+		removeBtn.textContent = "Remove";
+		removeBtn.className = "delete-btn";
+		removeBtn.addEventListener("click", () => {
+			chrome.storage.sync.get("blacklistedSites", (data) => {
+				const blacklistedSites = data.blacklistedSites || [];
+				const newBlacklist = blacklistedSites.filter(s => s !== site);
+				chrome.storage.sync.set({ blacklistedSites: newBlacklist }, () => {
+					item.remove();
+				});
+			});
+		});
+
+		item.appendChild(siteSpan);
+		item.appendChild(removeBtn);
+		blacklistContainer.appendChild(item);
+	}
+
+	// Add new site to blacklist
+	addSiteBtn.addEventListener("click", () => {
+		const site = newSiteInput.value.trim().toLowerCase();
+		if (site) {
+			chrome.storage.sync.get("blacklistedSites", (data) => {
+				const blacklistedSites = data.blacklistedSites || [];
+				if (!blacklistedSites.includes(site)) {
+					blacklistedSites.push(site);
+					chrome.storage.sync.set({ blacklistedSites }, () => {
+						addBlacklistItem(site);
+						newSiteInput.value = "";
+					});
+				}
+			});
+		}
+	});
+
+	// Handle Enter key in the new site input
+	newSiteInput.addEventListener("keypress", (e) => {
+		if (e.key === "Enter") {
+			addSiteBtn.click();
+		}
+	});
+
+	// Initial load
 	loadMappings();
+	loadBlacklistedSites();
 });
