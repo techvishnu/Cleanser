@@ -1,0 +1,13 @@
+{
+	"manifest_version": 3,
+	"name": "File Segregator with UI",
+	"version": "1.0",
+	"description": "Segregate files by document type while downloading and customize the mapping.",
+	"permissions": ["downloads", "storage"],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "options.html"
+	}
+}
