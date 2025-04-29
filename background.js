@@ -1,4 +1,17 @@
+// Handle extension icon click to open options in new tab
+chrome.action.onClicked.addListener(() => {
+	chrome.tabs.create({
+		url: 'options.html'
+	});
+});
+
+// Handle downloads with IDM Integration compatibility
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
+	// Check if the download is from IDM
+	if (downloadItem.byExtensionId === 'dnhgegphmhgjhcgpahdpphdpbjjpifp') {
+		return false; // Let IDM handle the download
+	}
+
 	// Use asynchronous storage call; return true to indicate async response.
 	chrome.storage.sync.get("mappings", (data) => {
 		// Use default mappings if none are saved.
